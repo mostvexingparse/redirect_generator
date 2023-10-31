@@ -110,11 +110,13 @@ class NotificationHandler
      */
     protected function sendNotificationEmail(string $subject, array $lines): void
     {
-        $recipients = \explode(',', $this->extensionConfiguration->get('redirect_generator', 'notification_email') ?? '');
+        $recipientsConfig = $this->extensionConfiguration->get('redirect_generator', 'notification_email') ?? '';
 
-        if (empty($recipients)) {
+        if (empty($recipientsConfig)) {
             return;
         }
+
+        $recipients = \explode(',', $recipientsConfig);
 
         $from = MailUtility::getSystemFrom();
         /** @var MailMessage */
